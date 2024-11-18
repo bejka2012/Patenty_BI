@@ -3,6 +3,8 @@ import re
 import csv
 from PyPDF2 import PdfReader
 
+import re
+
 # Cesta k složce s PDF soubory
 pdf_folder = r"C:\Users\Lenovo\Desktop\pokus"
 
