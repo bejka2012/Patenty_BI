@@ -1,13 +1,13 @@
-SELECT TOP 50 * FROM licencni_prijmy
+SELECT TOP 50 * FROM vysledek_stav
 SELECT TOP 50 * FROM Seznam_univerzit
-SELECT TOP 50 * FROM Applicants
+SELECT TOP 50 * FROM applicants_2
 SELECT TOP 50 * FROM casova_osa
 SELECT TOP 50 * FROM MPTapi
 SELECT TOP 50 * FROM MPTdata1
 
-SELECT * FROM MPTdata1
+SELECT * FROM licencni_prijmy
 
-DROP TABLE vysledekstav2
+DROP TABLE licencni_prijmy
 
 EXEC sp_rename 'malicenci_2.Patent_number', 'Application_number', 'COLUMN'
 EXEC sp_rename 'Seznam_univerzit.Zkratka', 'Zkratka_univerzity', 'COLUMN'
@@ -62,4 +62,26 @@ FROM MPTapi
 
 
 UPDATE MPTdata1
-SET 'API' = CONCAT('EP/', Application_Number);
+SET API = CONCAT('EP/', Application_Number);
+
+ALTER TABLE licencni_prijmy
+ALTER COLUMN Licencni_prijem INT
+
+UPDATE licencni_prijmy
+SET Licencni_prijem = Licencni_prijem *1000
+
+
+
+
+ALTER TABLE licencni_prijmy
+ADD IncomeCategory NVARCHAR(50)
+
+UPDATE licencni_prijmy
+SET IncomeCategory = 
+    CASE
+        WHEN Licencni_prijem <= 145000 THEN 'Low Income'
+        WHEN Licencni_prijem <= 800000 THEN 'Medium Income'
+        ELSE 'High Income'
+    END
+
+SELECT * FROM licencni_prijmy
