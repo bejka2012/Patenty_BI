@@ -85,3 +85,11 @@ SET IncomeCategory =
     END
 
 SELECT * FROM licencni_prijmy
+
+SELECT ID_univerzita,
+       CASE 
+           WHEN ID_univerzita = 3 THEN 4
+           WHEN ID_univerzita = 4 THEN 3
+           ELSE ID_univerzita
+       END AS new_ID_univerzita
+FROM applicants_2;
